@@ -1,4 +1,4 @@
-#root {
+no#root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,90 @@
 
 .read-the-docs {
   color: #888;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+              url('https://i.imgur.com/vSnA6bD.jpg') no-repeat center center/cover;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ff7e7e;
+}
+
+.hero-content {
+  text-align: center;
+  margin: auto;
+  max-width: 600px;
+}
+
+.hero-content h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+}
+
+.btn {
+  background-color: #f76c6c;
+  color: white;
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.btn:hover {
+  background-color: #ff4c4c;
+}
+
+.description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #e0e0e0;
 }
