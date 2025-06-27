@@ -3,24 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Responsive Footer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-..."
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
 <body>
-  <div class="contact-container">
-    <h2>Contact us</h2>
-    <form class="contact-form">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required />
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required />
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <i class="fa-solid fa-headphones-simple logo-icon"></i>
+        <span class="brand">HEADPHONES</span>
+      </div>
+      <div class="footer-center">
+        <span>&copy; headphones.com</span>
+      </div>
+      <div class="footer-right">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
 
-      <label for="message">Your message</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-
-      <button type="submit">CALL TO ACTION</button>
-    </form>
-  </div>
 </body>
 </html>
