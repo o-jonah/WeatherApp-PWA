@@ -30,6 +30,38 @@ function App() {
       </p>
     </>
   )
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Headphones Landing Page</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar">
+      <div class="logo">🎧 HEADPHONES</div>
+      <ul class="nav-links">
+        <li><a href="#">what we do</a></li>
+        <li><a href="#">our results</a></li>
+        <li><a href="#">contact us</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <h1>Lorem ipsum dolor set amet lorem ipsum</h1>
+      <p class="subtitle">Lorem ipsum dolor set amet lorem ipsum dolor set</p>
+      <a href="#" class="btn">CALL TO ACTION</a>
+      <p class="description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    </div>
+  </header>
+</body>
+</html>
+  
 }
 
 export default App
