@@ -1,76 +1,81 @@
-* {
-  box-sizing: border-box;
+body {
   margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
 }
 
-body {
-  background-color: #f9f9f9;
+.footer {
+  background-color: #0a0f1b;
+  color: #ffffffcc;
+  padding: 20px 10px;
+}
+
+.footer-content {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.contact-container {
-  background-color: #ffffff;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-}
-
-.contact-container h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #333;
-}
-
-.contact-form label {
-  display: block;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  resize: vertical;
-}
-
-.contact-form button {
-  background-color: #f2638c;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: block;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.contact-form button:hover {
-  background-color: #e0557e;
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1 1 100%;
+  text-align: center;
+  margin: 10px 0;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-  .contact-container {
-    padding: 30px 20px;
+.footer-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  color: #f00;
+}
+
+.brand {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.footer-right a {
+  color: #ffffffcc;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.footer-right a:hover {
+  color: #fff;
+}
+
+@media (min-width: 600px) {
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: 0 0 auto;
   }
 
-  .contact-form input,
-  .contact-form textarea {
-    font-size: 15px;
+  .footer-left {
+    justify-content: flex-start;
+    text-align: left;
   }
-    }
+
+  .footer-center {
+    text-align: center;
+  }
+
+  .footer-right {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .footer-content {
+    flex-wrap: nowrap;
+  }
+}
