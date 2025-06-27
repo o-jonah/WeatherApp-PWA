@@ -1,100 +1,76 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 body {
-  font-family: sans-serif;
-  background-color: #111;
-  color: #fff;
-}
-
-.results-section {
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.results-section .container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.results-section h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.results-section p {
-  font-size: 1rem;
-  max-width: 600px;
-  margin: 0 auto 40px;
-  line-height: 1.6;
-  color: #ccc;
-}
-
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.stat {
-  flex: 1 1 150px;
-  max-width: 200px;
-  text-align: center;
-}
-
-.pentagon {
-  width: 100px;
-  height: 0;
-  margin: 0 auto 10px;
-  position: relative;
-  color: white;
-  font-weight: bold;
-  padding-top: 90px;
-  background: #e74c3c;
-  clip-path: polygon(50% 0%, 100% 38%, 80% 100%, 20% 100%, 0% 38%);
+  background-color: #f9f9f9;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-.stat p {
-  font-size: 0.95rem;
-  color: #eee;
+.contact-container {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .pentagon {
-    width: 80px;
-    padding-top: 70px;
-    font-size: 1rem;
-  }
-
-  .stat p {
-    font-size: 0.85rem;
-  }
+.contact-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
 }
 
-@media (max-width: 480px) {
-  .results-section h2 {
-    font-size: 1.5rem;
-  }
-
-  .results-section p {
-    font-size: 0.9rem;
-  }
-
-  .stats {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stat {
-    max-width: 100%;
-  }
+.contact-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
 }
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.contact-form button {
+  background-color: #f2638c;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  margin: 0 auto;
+}
+
+.contact-form button:hover {
+  background-color: #e0557e;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .contact-container {
+    padding: 30px 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 15px;
+  }
+    }
