@@ -1,128 +1,26 @@
-no#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="contact-container">
+    <h2>Contact us</h2>
+    <form class="contact-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+      <label for="message">Your message</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body, html {
-  height: 100%;
-  font-family: Arial, sans-serif;
-}
-
-.hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-              url('https://i.imgur.com/vSnA6bD.jpg') no-repeat center center/cover;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 20px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: white;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #ff7e7e;
-}
-
-.hero-content {
-  text-align: center;
-  margin: auto;
-  max-width: 600px;
-}
-
-.hero-content h1 {
-  font-size: 1.8rem;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  margin-bottom: 20px;
-}
-
-.btn {
-  background-color: #f76c6c;
-  color: white;
-  padding: 12px 25px;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
-  display: inline-block;
-  margin-bottom: 20px;
-}
-
-.btn:hover {
-  background-color: #ff4c4c;
-}
-
-.description {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #e0e0e0;
-}
+      <button type="submit">CALL TO ACTION</button>
+    </form>
+  </div>
+</body>
+</html>
