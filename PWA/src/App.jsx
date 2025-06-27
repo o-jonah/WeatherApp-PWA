@@ -1,67 +1,100 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Headphones Landing Page</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header class="hero">
-    <nav class="navbar">
-      <div class="logo">🎧 HEADPHONES</div>
-      <ul class="nav-links">
-        <li><a href="#">what we do</a></li>
-        <li><a href="#">our results</a></li>
-        <li><a href="#">contact us</a></li>
-      </ul>
-    </nav>
-
-    <div class="hero-content">
-      <h1>Lorem ipsum dolor set amet lorem ipsum</h1>
-      <p class="subtitle">Lorem ipsum dolor set amet lorem ipsum dolor set</p>
-      <a href="#" class="btn">CALL TO ACTION</a>
-      <p class="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </p>
-    </div>
-  </header>
-</body>
-</html>
-  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-export default App
+body {
+  font-family: sans-serif;
+  background-color: #111;
+  color: #fff;
+}
+
+.results-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.results-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.results-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.results-section p {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.stat {
+  flex: 1 1 150px;
+  max-width: 200px;
+  text-align: center;
+}
+
+.pentagon {
+  width: 100px;
+  height: 0;
+  margin: 0 auto 10px;
+  position: relative;
+  color: white;
+  font-weight: bold;
+  padding-top: 90px;
+  background: #e74c3c;
+  clip-path: polygon(50% 0%, 100% 38%, 80% 100%, 20% 100%, 0% 38%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.stat p {
+  font-size: 0.95rem;
+  color: #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pentagon {
+    width: 80px;
+    padding-top: 70px;
+    font-size: 1rem;
+  }
+
+  .stat p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .results-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .results-section p {
+    font-size: 0.9rem;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat {
+    max-width: 100%;
+  }
+}
