@@ -1,35 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results Section</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <section class="results-section">
-    <div class="container">
-      <h2>Our results speak for themselves</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <div class="stats">
-        <div class="stat">
-          <div class="pentagon">+2%</div>
-          <p>Conversion Growth</p>
-        </div>
-        <div class="stat">
-          <div class="pentagon">+2%</div>
-          <p>Customer Retention</p>
-        </div>
-        <div class="stat">
-          <div class="pentagon">+2%</div>
-          <p>Engagement Rate</p>
-        </div>
-        <div class="stat">
-          <div class="pentagon">+2%</div>
-          <p>Revenue Boost</p>
-        </div>
-      </div>
+"use client"
+
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+
+const data = [
+  { month: "January", cost: 2400 },
+  { month: "February", cost: 2100 },
+  { month: "March", cost: 2800 },
+  { month: "April", cost: 3200 },
+  { month: "May", cost: 2900 },
+  { month: "June", cost: 3400 },
+  { month: "July", cost: 3100 },
+  { month: "August", cost: 3600 },
+  { month: "September", cost: 3300 },
+  { month: "October", cost: 3800 },
+  { month: "November", cost: 3500 },
+  { month: "December", cost: 4200 },
+]
+
+export default function Component() {
+  return (
+    <div className="w-full max-w-6xl mx-auto p-4 sm:p-6">
+      <Card className="w-full">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl sm:text-2xl">Infrastructure Costs</CardTitle>
+          <CardDescription className="text-sm sm:text-base">
+            Monthly infrastructure spending over the past year
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-4 sm:p-6">
+          <ChartContainer
+            config={{
+              cost: {
+                label: "Cost ($)",
+                color: "hsl(var(--chart-1))",
+              },
+            }}
+            className="h-[300px] sm:h-[400px] lg:h-[500px] w-full"
+          >
+            <LineChart
+              accessibilityLayer
+              data={data}
+              margin={{
+                top: 20,
+                left: 20,
+                right: 20,
+                bottom: 20,
+              }}
+            >
+              <CartesianGrid vertical={false} strokeDasharray="3 3" className="opacity-30" />
+              <XAxis
+                dataKey="month"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                className="text-xs sm:text-sm"
+                tickFormatter={(value) => value.slice(0, 3)}
+                interval="preserveStartEnd"
+              />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                className="text-xs sm:text-sm"
+                tickFormatter={(value) => `$${(value / 1000).toFixed(1)}k`}
+                width={60}
+              />
+              <ChartTooltip
+                cursor={{ strokeDasharray: "3 3" }}
+                content={
+                  <ChartTooltipContent
+                    formatter={(value, name) => [`$${Number(value).toLocaleString()}`, "Infrastructure Cost"]}
+                    labelFormatter={(label) => `${label} 2024`}
+                  />
+                }
+              />
+              <Line
+                dataKey="cost"
+                type="monotone"
+                stroke="var(--color-cost)"
+                strokeWidth={3}
+                dot={{
+                  fill: "var(--color-cost)",
+                  strokeWidth: 2,
+                  r: 4,
+                }}
+                activeDot={{
+                  r: 6,
+                  strokeWidth: 2,
+                }}
+              />
+            </LineChart>
+          </ChartContainer>
+
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div className="space-y-1">
+              <p className="text-xs sm:text-sm text-muted-foreground">Average</p>
+              <p className="text-lg sm:text-xl font-semibold">$3,117</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs sm:text-sm text-muted-foreground">Highest</p>
+              <p className="text-lg sm:text-xl font-semibold">$4,200</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs sm:text-sm text-muted-foreground">Lowest</p>
+              <p className="text-lg sm:text-xl font-semibold">$2,100</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs sm:text-sm text-muted-foreground">Total</p>
+              <p className="text-lg sm:text-xl font-semibold">$37,400</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  </section>
-</body>
-</html>
+  )
+}
