@@ -1,36 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Responsive Footer</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-..."
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-</head>
-<body>
+import { NavLink } from "react-router-dom";
+import { sidebarLinks } from "../constants/sidebarLinks";
 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-left">
-        <i class="fa-solid fa-headphones-simple logo-icon"></i>
-        <span class="brand">HEADPHONES</span>
+const Sidebar = () => {
+  return (
+    <div className="h-screen w-64 bg-white shadow-md px-6 py-4 flex flex-col justify-start">
+      {/* Logo */}
+      <div className="mb-10">
+        <h1 className="text-2xl font-serif font-bold">
+          <span className="text-black">Vision </span>
+          <span className="text-red-600">Group</span>
+        </h1>
+        <p className="text-xs text-gray-500 mt-1 tracking-wide">
+          NATIONAL PRIDE • GLOBAL EXCELLENCE
+        </p>
+        <hr className="mt-2 border-gray-300" />
       </div>
-      <div class="footer-center">
-        <span>&copy; headphones.com</span>
-      </div>
-      <div class="footer-right">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-      </div>
+
+      {/* Navigation Links */}
+      <nav className="flex flex-col gap-4">
+        {sidebarLinks.map(({ name, path, icon: Icon }) => (
+          <NavLink
+            key={name}
+            to={path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 text-sm font-medium ${
+                isActive ? "text-blue-500" : "text-black"
+              }`
+            }
+          >
+            <Icon className="w-5 h-5" />
+            {name}
+          </NavLink>
+        ))}
+      </nav>
     </div>
-  </footer>
+  );
+};
 
-</body>
-</html>
+export default Sidebar;
