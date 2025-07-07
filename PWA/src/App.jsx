@@ -1,74 +1,49 @@
-import React from 'react';
+import React from "react";
+import "./CapExScorecard.css";
 
-const reportData = [
-  {
-    id: 1,
-    date: '2025-07-06',
-    name: 'Q2 Financials',
-    type: 'Quarterly Report',
-    responsibility: 'John Doe',
-    pdfUrl: '/reports/q2-financials.pdf',
-    wordUrl: '/reports/q2-financials.docx',
-  },
-  {
-    id: 2,
-    date: '2025-07-05',
-    name: 'Audit Summary',
-    type: 'Audit Report',
-    responsibility: 'Jane Smith',
-    pdfUrl: '/reports/audit-summary.pdf',
-    wordUrl: '/reports/audit-summary.docx',
-  },
-  // Add more entries as needed
-];
+const data = {
+  year: 2025,
+  totalCapEx: 1250000,
+  categories: [
+    { type: "Machinery", amount: 350000, ppeScore: 85 },
+    { type: "Vehicles", amount: 250000, ppeScore: 75 },
+    { type: "Buildings", amount: 450000, ppeScore: 90 },
+    { type: "IT Infrastructure", amount: 200000, ppeScore: 70 },
+  ],
+};
 
-const ReportTable = () => {
+const PPEProgress = ({ score }) => (
+  <div className="ppe-progress">
+    <div className="progress-bar" style={{ width: `${score}%` }}></div>
+    <span>{score}%</span>
+  </div>
+);
+
+const CapExCategoryCard = ({ category }) => (
+  <div className="category-card">
+    <h3>{category.type}</h3>
+    <p><strong>CapEx:</strong> ${category.amount.toLocaleString()}</p>
+    <div>
+      <strong>PPE Score:</strong>
+      <PPEProgress score={category.ppeScore} />
+    </div>
+  </div>
+);
+
+const CapExScorecard = () => {
   return (
-    <div className="p-4 max-w-6xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Report Modification Tracker</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-200">
-          <thead className="bg-gray-100 text-left">
-            <tr>
-              <th className="py-2 px-4 border-b">ID</th>
-              <th className="py-2 px-4 border-b">Date</th>
-              <th className="py-2 px-4 border-b">Name</th>
-              <th className="py-2 px-4 border-b">Report Type</th>
-              <th className="py-2 px-4 border-b">Responsibility</th>
-              <th className="py-2 px-4 border-b">Download</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reportData.map((report) => (
-              <tr key={report.id} className="hover:bg-gray-50">
-                <td className="py-2 px-4 border-b">{report.id}</td>
-                <td className="py-2 px-4 border-b">{report.date}</td>
-                <td className="py-2 px-4 border-b">{report.name}</td>
-                <td className="py-2 px-4 border-b">{report.type}</td>
-                <td className="py-2 px-4 border-b">{report.responsibility}</td>
-                <td className="py-2 px-4 border-b flex gap-2">
-                  <a
-                    href={report.pdfUrl}
-                    download
-                    className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
-                  >
-                    PDF
-                  </a>
-                  <a
-                    href={report.wordUrl}
-                    download
-                    className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
-                  >
-                    Word
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="scorecard-container">
+      <h1>Capital Expenditure Scorecard - {data.year}</h1>
+      <div className="summary">
+        <strong>Total CapEx:</strong> ${data.totalCapEx.toLocaleString()}
+      </div>
+      <div className="category-grid">
+        {data.categories.map((cat, idx) => (
+          <CapExCategoryCard key={idx} category={cat} />
+        ))}
       </div>
     </div>
   );
 };
 
-export default ReportTable;
+export default CapExScorecard;
