@@ -1,40 +1,61 @@
-import { NavLink } from "react-router-dom";
-import { sidebarLinks } from "../constants/sidebarLinks";
+.scorecard-container {
+  padding: 1.5rem;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
 
-const Sidebar = () => {
-  return (
-    <div className="h-screen w-64 bg-white shadow-md px-6 py-4 flex flex-col justify-start">
-      {/* Logo */}
-      <div className="mb-10">
-        <h1 className="text-2xl font-serif font-bold">
-          <span className="text-black">Vision </span>
-          <span className="text-red-600">Group</span>
-        </h1>
-        <p className="text-xs text-gray-500 mt-1 tracking-wide">
-          NATIONAL PRIDE • GLOBAL EXCELLENCE
-        </p>
-        <hr className="mt-2 border-gray-300" />
-      </div>
+h1 {
+  text-align: center;
+  color: #222;
+}
 
-      {/* Navigation Links */}
-      <nav className="flex flex-col gap-4">
-        {sidebarLinks.map(({ name, path, icon: Icon }) => (
-          <NavLink
-            key={name}
-            to={path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 text-sm font-medium ${
-                isActive ? "text-blue-500" : "text-black"
-              }`
-            }
-          >
-            <Icon className="w-5 h-5" />
-            {name}
-          </NavLink>
-        ))}
-      </nav>
-    </div>
-  );
-};
+.summary {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
 
-export default Sidebar;
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.category-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.category-card h3 {
+  margin-bottom: 0.5rem;
+  color: #0066cc;
+}
+
+.ppe-progress {
+  margin-top: 0.5rem;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  position: relative;
+  height: 20px;
+}
+
+.progress-bar {
+  background-color: #4caf50;
+  height: 100%;
+  border-radius: 5px 0 0 5px;
+  transition: width 0.5s ease-in-out;
+}
+
+.ppe-progress span {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  color: #000;
+  font-size: 0.8rem;
+  line-height: 20px;
+}
