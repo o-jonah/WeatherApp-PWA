@@ -1,143 +1,183 @@
-import React, { useRef, useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  CartesianGrid,
-  LabelList,
-} from "recharts";
-import htmlToImage from "html-to-image";
-import jsPDF from "jspdf";
-import "./CapExChartDashboard.css";
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-const rawData = {
-  "2025": {
-    January: [
-      { name: "Machinery", value: 80000 },
-      { name: "Vehicles", value: 30000 },
-      { name: "Buildings", value: 40000 },
-      { name: "IT Infrastructure", value: 20000 },
-    ],
-    February: [
-      { name: "Machinery", value: 70000 },
-      { name: "Vehicles", value: 25000 },
-      { name: "Buildings", value: 50000 },
-      { name: "IT Infrastructure", value: 30000 },
-    ],
-  },
-  "2024": {
-    January: [
-      { name: "Machinery", value: 50000 },
-      { name: "Vehicles", value: 15000 },
-      { name: "Buildings", value: 30000 },
-      { name: "IT Infrastructure", value: 10000 },
-    ],
-  },
-};
+// Colors for chart slices
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-const CapExChartDashboard = () => {
+const CapexPieChart = () => {
+  const [chartData, setChartData] = useState([]);
+  const [allData, setAllData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState('All');
+  const [selectedMonth, setSelectedMonth] = useState('All');
   const chartRef = useRef(null);
-  const [year, setYear] = useState("2025");
-  const [month, setMonth] = useState("January");
-  const [view, setView] = useState("pie");
 
-  const data = rawData[year]?.[month] || [];
+  // Fetch all data on load
+  useEffect(() => {
+    axios.get('https://yourapi.com/api/financials/capex')
+      .then(response => {
+        const rawData = response.data.data;
+        setAllData(rawData);
+        setChartData(groupData(rawData));
+      })
+      .catch(error => {
+        console.error("Error fetching CapEx data:", error);
+      });
+  }, []);
 
-  const handleDownload = (type) => {
-    if (!chartRef.current) return;
-    htmlToImage.toPng(chartRef.current).then((dataUrl) => {
-      if (type === "png") {
-        const link = document.createElement("a");
-        link.download = `CapEx_${year}_${month}.png`;
-        link.href = dataUrl;
-        link.click();
-      } else if (type === "pdf") {
-        const pdf = new jsPDF();
-        pdf.addImage(dataUrl, "PNG", 15, 15, 180, 160);
-        pdf.save(`CapEx_${year}_${month}.pdf`);
-      }
+  // Group data by capexCategory
+  const groupData = (data) => {
+    const categoryTotals = data.reduce((acc, item) => {
+      const category = item.capexCategory;
+      acc[category] = (acc[category] || 0) + item.Amount;
+      return acc;
+    }, {});
+    return Object.entries(categoryTotals).map(([name, value]) => ({ name, value }));
+  };
+
+  // Filter handler
+  const handleFilter = () => {
+    const filtered = allData.filter(item => {
+      const date = new Date(item.Posting_Date);
+      const yearMatch = selectedYear === 'All' || date.getFullYear().toString() === selectedYear;
+      const monthMatch = selectedMonth === 'All' || (date.getMonth() + 1).toString().padStart(2, '0') === selectedMonth;
+      return yearMatch && monthMatch;
+    });
+    setChartData(groupData(filtered));
+  };
+
+  // Export as PNG
+  const handleExportPNG = () => {
+    html2canvas(chartRef.current).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'capex-piechart.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     });
   };
 
+  // Export as PDF
+  const handleExportPDF = () => {
+    html2canvas(chartRef.current).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      // Add title and date
+      const title = 'CapEx Distribution Report';
+      const dateStr = new Date().toLocaleDateString();
+      pdf.setFontSize(16);
+      pdf.text(title, 10, 15);
+      pdf.setFontSize(10);
+      pdf.text(`Generated on: ${dateStr}`, 10, 22);
+
+      // Add chart image
+      const imgProps = { width: 180, height: (canvas.height * 180) / canvas.width };
+      pdf.addImage(imgData, 'PNG', 10, 30, imgProps.width, imgProps.height);
+
+      pdf.save('capex-piechart.pdf');
+    });
+  };
+
+  // Tooltip content with % calculation
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const total = chartData.reduce((sum, entry) => sum + entry.value, 0);
+      const percent = ((payload[0].value / total) * 100).toFixed(1);
+      return (
+        <div style={{ backgroundColor: '#fff', padding: 10, border: '1px solid #ccc' }}>
+          <strong>{payload[0].name}</strong><br />
+          Amount: UGX {payload[0].value.toLocaleString()}<br />
+          {percent}%
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
-    <div className="dashboard-container">
-      <h2>CapEx Overview ({year}, {month})</h2>
+    <div style={{ textAlign: 'center' }}>
+      <h3>CapEx Distribution by Category</h3>
 
-      <div className="controls">
-        <select value={year} onChange={(e) => setYear(e.target.value)}>
-          {Object.keys(rawData).map((y) => (
-            <option key={y} value={y}>
-              {y}
+      {/* Filters */}
+      <div style={{ marginBottom: 20 }}>
+        <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)} style={dropdownStyle}>
+          <option value="All">All Years</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+        </select>
+        <select value={selectedMonth} onChange={e => setSelectedMonth(e.target.value)} style={dropdownStyle}>
+          <option value="All">All Months</option>
+          {Array.from({ length: 12 }, (_, i) => (
+            <option key={i + 1} value={(i + 1).toString().padStart(2, '0')}>
+              {new Date(0, i).toLocaleString('default', { month: 'long' })}
             </option>
           ))}
         </select>
-
-        <select value={month} onChange={(e) => setMonth(e.target.value)}>
-          {Object.keys(rawData[year] || {}).map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-
-        <button onClick={() => setView(view === "pie" ? "bar" : "pie")}>
-          Toggle to {view === "pie" ? "Bar" : "Pie"} Chart
-        </button>
-
-        <button onClick={() => handleDownload("png")}>Download PNG</button>
-        <button onClick={() => handleDownload("pdf")}>Download PDF</button>
+        <button onClick={handleFilter} style={buttonStyle}>Apply Filter</button>
       </div>
 
-      <div className="chart-wrapper" ref={chartRef}>
-        {view === "pie" ? (
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                labelLine={false}
-                label={({ name, percent }) =>
-                  `${name}: ${(percent * 100).toFixed(1)}%`
-                }
-                dataKey="value"
-              >
-                {data.map((entry, i) => (
-                  <Cell key={entry.name} fill={COLORS[i % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        ) : (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis tickFormatter={(v) => `$${v / 1000}k`} />
-              <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-              <Legend />
-              <Bar dataKey="value" fill="#8884d8">
-                <LabelList dataKey="value" position="top" />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        )}
+      {/* Chart wrapped in white box */}
+      <div
+        ref={chartRef}
+        style={{
+          display: 'inline-block',
+          padding: 20,
+          backgroundColor: '#ffffff',
+          borderRadius: 8,
+          boxShadow: '0 0 5px rgba(0,0,0,0.1)'
+        }}
+      >
+        <PieChart width={400} height={300}>
+          <Pie
+            data={chartData}
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            label
+            dataKey="value"
+          >
+            {chartData.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+        </PieChart>
+      </div>
+
+      {/* Export Buttons */}
+      <div style={{ marginTop: 20 }}>
+        <button onClick={handleExportPNG} style={buttonStyle}>Export as PNG</button>
+        <button onClick={handleExportPDF} style={buttonStyle}>Export as PDF</button>
       </div>
     </div>
   );
 };
 
-export default CapExChartDashboard;
-      
+// Styles
+const buttonStyle = {
+  margin: '0 10px',
+  padding: '10px 15px',
+  fontSize: '14px',
+  cursor: 'pointer',
+  borderRadius: '5px',
+  border: 'none',
+  backgroundColor: '#0088FE',
+  color: '#fff'
+};
+
+const dropdownStyle = {
+  marginRight: '10px',
+  padding: '8px',
+  fontSize: '14px'
+};
+
+export default CapexPieChart;
+  
