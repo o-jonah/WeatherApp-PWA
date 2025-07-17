@@ -1,42 +1,58 @@
-.dashboard-container {
-  max-width: 700px;
-  margin: 2rem auto;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  font-family: sans-serif;
-}
+import React, { useEffect, useState } from "react";
+import AssetRow from "./AssetRow";
 
-h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
+const AssetTable = () => {
+  const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-.controls {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
+  // Replace this URL with your backend endpoint
+  const API_URL = "http://localhost:5000/api/assets";
 
-.controls select,
-.controls button {
-  padding: 0.5rem;
-  font-size: 0.9rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f7f7f7;
-  cursor: pointer;
-}
+  useEffect(() => {
+    const fetchAssets = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const result = await response.json();
+        setAssets(result.data); // access 'data' array
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        setLoading(false);
+      }
+    };
 
-.controls button:hover {
-  background: #eaeaea;
-}
+    fetchAssets();
+  }, []);
 
-.chart-wrapper {
-  background: #fafafa;
-  padding: 1rem;
-  border-radius: 10px;
-}
+  if (loading) return <p>Loading assets...</p>;
+
+  return (
+    <div>
+      <h2>Asset Depreciation Table</h2>
+      <table border="1" cellPadding="5" cellSpacing="0" style={{ width: "100%" }}>
+        <thead>
+          <tr>
+            <th>Asset ID</th>
+            <th>Asset Name</th>
+            <th>Acquisition Date</th>
+            <th>Acquisition Cost</th>
+            <th>Useful Life</th>
+            <th>Residual Value</th>
+            <th>Depreciation Method</th>
+            <th>Accumulated Depreciation</th>
+            <th>Current Value</th>
+            <th>Schedule</th>
+          </tr>
+        </thead>
+        <tbody>
+          {assets.map((asset) => (
+            <AssetRow key={asset.asset_id} asset={asset} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default AssetTable;
+        
